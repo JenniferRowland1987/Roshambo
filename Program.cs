@@ -17,25 +17,26 @@ static void DisplayOpponents()
 
 static void DisplayMenu(Type enumType)
 {
+    Console.WriteLine("Please choose your throw from the following:");
     foreach (int i in Enum.GetValues(enumType))
     {
         Console.WriteLine($"{Enum.GetName(enumType, i)}");
-        Console.WriteLine("Please choose your throw, R - Rock, P - Paper, or S - Scissors.");
     }
+    
 }
 
 static RoshamboEnum GetComputerThrow(string opponentSelection)
 {
     RockPlayer rockPlayer = new RockPlayer();
     RandomPlayer randomPlayer = new RandomPlayer();
-    RoshamboEnum compThrow;
-   
+    RoshamboEnum compThrow = RoshamboEnum.Paper;
+
+    
     while (!Validators.ValidateOpponentSelection(opponentSelection))
     {
         Console.WriteLine("Sorry, that is an invalid opponent selection, please try again.");
         DisplayOpponents();
-        string input = Console.ReadLine();
-        opponentSelection = input.ToLower().Trim();
+        opponentSelection = Console.ReadLine().ToLower().Trim();
     }
     switch (opponentSelection)
     {
@@ -110,19 +111,24 @@ while (playAgain)
     userOpponentSelection = Console.ReadLine().ToLower().Trim();
 
     DisplayMenu(typeof(RoshamboEnum));
-    userThrowSelection = Console.ReadLine().ToLower().Trim();
+    
 
     playerThrow = player.GenerateRoshambo();
     computerThrow = GetComputerThrow(userOpponentSelection);
+
+    Console.WriteLine($"{player.Name}, you chose: {playerThrow}!");
+    Console.WriteLine("....");
+    Console.WriteLine($"your opponent chose: {computerThrow}");
+
     if(GetResults(playerThrow, computerThrow) == ResultsEnum.win)
     {
         Console.WriteLine($"{playerThrow} beats {computerThrow}!  {player.Name} wins this round!");
-        playerScore = +1;           
+        playerScore++;           
     }
     else if(GetResults(playerThrow, computerThrow) == ResultsEnum.lose)
     {
         Console.WriteLine($"{computerThrow} beats {playerThrow}, better luck next time, {player.Name}!");
-        computerScore = +1;
+        computerScore++;
     }
     else
     {

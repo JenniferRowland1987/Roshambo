@@ -15,12 +15,13 @@ namespace Roshambo
    
         public override RoshamboEnum GenerateRoshambo()
         {
+            UserThrowSelection = Console.ReadLine().ToLower().Trim();
+
             while (!Validators.ValidateRPSSelection(UserThrowSelection))
             {
                 Console.WriteLine($"Sorry, that is an invalid throw, please try again.");
                 Console.WriteLine("Choose: R - Rock, P - Paper, S - Scissors."); ;
-                string input = Console.ReadLine();
-                UserThrowSelection = input.ToLower().Trim();
+                UserThrowSelection = Console.ReadLine().ToLower().Trim();
             }
             switch (UserThrowSelection)
             {
